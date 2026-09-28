@@ -24,10 +24,10 @@ const NOTIFICATIONS = [
   { id: '3', type: 'follow', name: 'Dele O.', message: 'started following you', time: '3h', unread: false, preview: null },
 ]
 
-function NotificationRow({ item }) {
+function NotificationRow({ item, onPress }) {
   const meta = TYPE_META[item.type]
   return (
-    <TouchableOpacity style={[styles.row, item.unread && styles.rowUnread]}>
+    <TouchableOpacity style={[styles.row, item.unread && styles.rowUnread]} onPress={onPress}>
       <View style={styles.avatarWrap}>
         <View style={styles.avatar} />
         <View style={[styles.typeBadge, { backgroundColor: meta.color }]}>
@@ -53,18 +53,22 @@ function NotificationRow({ item }) {
 
 export default function NotificationsScreen({ navigation }) {
   const [tab, setTab] = useState('all')
+  const [items, setItems] = useState(NOTIFICATIONS)
 
   const filtered = useMemo(() => {
-    if (tab === 'mentions') return NOTIFICATIONS.filter((n) => n.type === 'mention')
-    return NOTIFICATIONS
-  }, [tab])
+    if (tab === 'mentions') return items.filter((n) => n.type === 'mention')
+    return items
+  }, [tab, items])
+
+  const markAllRead = () => setItems((prev) => prev.map((n) => ({ ...n, unread: false })))
+  const markOneRead = (id) => setItems((prev) => prev.map((n) => (n.id === id ? { ...n, unread: false } : n)))
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <Text style={styles.headerTitle}>Notifications</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={markAllRead}>
             <Text style={styles.markReadText}>Mark all as read</Text>
           </TouchableOpacity>
         </View>
@@ -93,7 +97,7 @@ export default function NotificationsScreen({ navigation }) {
         <FlatList
           data={filtered}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <NotificationRow item={item} />}
+          renderItem={({ item }) => <NotificationRow item={item} onPress={() => markOneRead(item.id)} />}
           contentContainerStyle={styles.list}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />

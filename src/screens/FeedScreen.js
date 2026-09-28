@@ -7,6 +7,8 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Image,
+  Alert,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { colors, type, radius, spacing } from '../theme/tokens'
@@ -73,7 +75,10 @@ function PostCard({ post }) {
           <Ionicons name="chatbubble-outline" size={18} color={colors.textSecondary} />
           <Text style={styles.actionText}>Comment</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => Alert.alert('Shared', 'Post shared to your story.')}
+        >
           <Ionicons name="share-outline" size={18} color={colors.textSecondary} />
           <Text style={styles.actionText}>Share</Text>
         </TouchableOpacity>
@@ -87,7 +92,14 @@ export default function FeedScreen({ navigation }) {
     <SafeAreaView style={styles.safe}>
       <View style={styles.topBar}>
         <Text style={styles.logo}>Vibeo</Text>
-        <View style={styles.avatarSm} />
+        <View style={styles.topBarRight}>
+          <TouchableOpacity onPress={() => navigation?.navigate('Notifications')}>
+            <Ionicons name="notifications-outline" size={22} color={colors.textPrimary} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation?.navigate('Settings')}>
+            <View style={styles.avatarSm} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView style={styles.flex} showsVerticalScrollIndicator={false}>
@@ -100,7 +112,10 @@ export default function FeedScreen({ navigation }) {
               placeholderTextColor={colors.textMuted}
             />
           </View>
-          <TouchableOpacity style={styles.composeButton}>
+          <TouchableOpacity
+            style={styles.composeButton}
+            onPress={() => Alert.alert('Create Post', 'Post composer coming once backend is wired up.')}
+          >
             <Ionicons name="add" size={22} color={colors.accent} />
           </TouchableOpacity>
         </View>
@@ -142,6 +157,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.border,
   },
   logo: { ...type.headlineSm, color: colors.textPrimary },
+  topBarRight: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   avatarSm: { width: 32, height: 32, borderRadius: radius.full, backgroundColor: colors.surfaceHigh },
   searchRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
   searchBar: {

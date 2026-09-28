@@ -16,6 +16,8 @@ import ErrorScreen from './src/screens/ErrorScreen'
 import LoadingScreen from './src/screens/LoadingScreen'
 import NotificationsScreen from './src/screens/NotificationsScreen'
 import SettingsScreen from './src/screens/SettingsScreen'
+import ChatConversationScreen from './src/screens/ChatConversationScreen'
+import EditProfileScreen from './src/screens/EditProfileScreen'
 import { colors } from './src/theme/tokens'
 
 SplashScreen.preventAutoHideAsync()
@@ -69,7 +71,9 @@ export default function App() {
             <Stack.Screen name="Login">
               {(props) => <LoginScreen {...props} onLogin={() => setIsLoggedIn(true)} />}
             </Stack.Screen>
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="SignUp">
+              {(props) => <SignUpScreen {...props} onSignUp={() => setIsLoggedIn(true)} />}
+            </Stack.Screen>
           </>
         ) : (
           <>
@@ -78,6 +82,8 @@ export default function App() {
             <Stack.Screen name="Settings">
               {(props) => <SettingsScreen {...props} onLogout={() => setIsLoggedIn(false)} />}
             </Stack.Screen>
+            <Stack.Screen name="ChatConversation" component={ChatConversationScreen} />
+            <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           </>
         )}
         <Stack.Screen name="Error" component={ErrorScreen} />

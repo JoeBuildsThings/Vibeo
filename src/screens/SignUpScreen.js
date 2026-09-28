@@ -11,7 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 import { colors, type, radius, spacing } from '../theme/tokens'
 
-export default function SignUpScreen({ navigation }) {
+export default function SignUpScreen({ navigation, onSignUp }) {
   const [fullName, setFullName] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -131,7 +131,7 @@ export default function SignUpScreen({ navigation }) {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.primaryButton}>
+          <TouchableOpacity style={styles.primaryButton} onPress={() => onSignUp && onSignUp({ email })}>
             <Text style={styles.primaryButtonText}>Create Account</Text>
             <Ionicons name="arrow-forward" size={16} color={colors.onAccent} />
           </TouchableOpacity>

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Share,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { colors, type, radius, spacing } from '../theme/tokens'
@@ -19,7 +20,9 @@ export default function ProfileScreen({ navigation }) {
     <SafeAreaView style={styles.safe}>
       <View style={styles.topBar}>
         <Text style={styles.logo}>Vibeo</Text>
-        <View style={styles.avatarSm} />
+        <TouchableOpacity onPress={() => navigation?.navigate('Settings')}>
+          <View style={styles.avatarSm} />
+        </TouchableOpacity>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -91,11 +94,14 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.actionsRow}>
-          <TouchableOpacity style={styles.primaryAction}>
+          <TouchableOpacity style={styles.primaryAction} onPress={() => navigation?.navigate('EditProfile')}>
             <Ionicons name="create-outline" size={16} color={colors.onAccent} />
             <Text style={styles.primaryActionText}>Edit Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.secondaryAction}>
+          <TouchableOpacity
+            style={styles.secondaryAction}
+            onPress={() => Share.share({ message: 'Check out my profile on Vibeo, @marcusv' })}
+          >
             <Ionicons name="paper-plane-outline" size={16} color={colors.textPrimary} />
             <Text style={styles.secondaryActionText}>Share Profile</Text>
           </TouchableOpacity>

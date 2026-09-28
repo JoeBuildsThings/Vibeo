@@ -7,6 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Alert,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { colors, type, radius, spacing } from '../theme/tokens'
@@ -136,9 +137,23 @@ export default function SettingsScreen({ navigation, onLogout }) {
         </SettingsSection>
 
         <SettingsSection title="About">
-          <ClickableRow icon="information-circle-outline" title="About Vibeo" subtitle="Version 1.0.0" onPress={() => {}} />
-          <ClickableRow icon="document-text-outline" title="Privacy Policy" onPress={() => {}} />
-          <ClickableRow icon="reader-outline" title="Terms of Service" onPress={() => {}} isLast />
+          <ClickableRow
+            icon="information-circle-outline"
+            title="About Vibeo"
+            subtitle="Version 1.0.0"
+            onPress={() => Alert.alert('Vibeo', 'A social platform combining feeds and real time messaging. Version 1.0.0')}
+          />
+          <ClickableRow
+            icon="document-text-outline"
+            title="Privacy Policy"
+            onPress={() => Alert.alert('Privacy Policy', 'Privacy policy content goes here once finalized.')}
+          />
+          <ClickableRow
+            icon="reader-outline"
+            title="Terms of Service"
+            onPress={() => Alert.alert('Terms of Service', 'Terms of service content goes here once finalized.')}
+            isLast
+          />
         </SettingsSection>
 
         <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>

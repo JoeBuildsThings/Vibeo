@@ -19,9 +19,9 @@ const CHATS = [
 
 const FILTERS = ['All', 'Unread', 'Groups', 'Archived']
 
-function ChatRow({ chat }) {
+function ChatRow({ chat, onPress }) {
   return (
-    <TouchableOpacity style={styles.chatRow}>
+    <TouchableOpacity style={styles.chatRow} onPress={onPress}>
       <View style={styles.avatarWrap}>
         <View style={styles.avatar} />
         {chat.online && <View style={styles.onlineDot} />}
@@ -92,7 +92,9 @@ export default function ChatsScreen({ navigation }) {
       <FlatList
         data={CHATS}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ChatRow chat={item} />}
+        renderItem={({ item }) => (
+          <ChatRow chat={item} onPress={() => navigation?.navigate('ChatConversation', { name: item.name })} />
+        )}
         contentContainerStyle={styles.chatList}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
